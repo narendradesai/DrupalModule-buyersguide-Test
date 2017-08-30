@@ -1,0 +1,213 @@
+<?php
+/*
+function buyers_guide_menu() {
+  $items['buyers-guide-2017'] = array(
+				   'title' => 'Buyer\'s Guide 2017',
+				   'description' => 'Company ID',
+				   'page callback' => 'buyers_guide_2017_view',
+				   'access callback' => true,
+				   'access arguments' => true,
+				   'type' => MENU_NORMAL_ITEM,
+				   'weight' => 10
+				   );
+	$items['buyersguide2017'] = array(
+				   'title' => 'Buyer\'s Guide 2017',
+				   'description' => 'Company ID',
+				   'page callback' => 'buyers_guide_form',
+				   'access callback' => true,
+				   'access arguments' => true,
+				   'type' => MENU_NORMAL_ITEM,
+				   'weight' => 10
+				   );	   
+	$items['ajax_buyers_details'] = array(
+					'page callback' => 'populate_buyers_guide_db',
+					'access callback' => true,
+					'access arguments' => true,
+					'type' => MENU_LOCAL_TASK,
+					);
+	$items['ajax_buyers_details_dont_use_last_year_data'] = array(
+					'page callback' => 'populate_company_details_0_db',
+					'access callback' => true,
+					'access arguments' => true,
+					'type' => MENU_LOCAL_TASK,
+					);
+  return $items;
+}
+function populate_buyers_guide_db() {
+	$companyData = json_decode($_POST['data'],true);
+	$sql= db_query('select companyId, companyName from company_details_0  where companyId='.$companyData['companyId']);
+	$result = db_fetch_array($sql);
+	$result['Address1']='Last_year';
+	$result['Address2']='Last_year';
+	$result['City']='Last_year';
+	$result['State']='LY';
+	$result['Zip']='Last_year';
+	$result['Phone_no']='Last_year';
+	$result['Fax_no']='Last_year';
+	$result['Website']='Last_year';
+	$result['Contact_name']='Last_year';
+	$result['Contact_email_address']='Last_year@ly.lastyear';
+	$result['Company_category_1']='Accounting';
+	$result['Company_category_2']='Last_year';
+	$result['Company_description']='Last_year';
+	$result['Confirmation_email_address']='';
+	
+	$sql1 = db_query("update company_details_0 set useLastYearData='Yes' where companyId=".$companyData['companyId']);
+	//echo $result;
+	//die();
+	//echo $sql;
+	//echo $result['Address1'];
+	//$form['submitted']['company_details']['address_1']['#value']=$result['Address1'];
+	//submitted[company_details][address_1]
+	drupal_json($result);
+	
+}
+function populate_company_details_0_db() {
+	$companyData = json_decode($_POST['data'],true);
+	$sql1 = db_query("update company_details_0 set useLastYearData='' where companyId=".$companyData['companyId']);
+}
+
+
+function search_buyers_guide_2017() {
+	$form=array();
+	
+	$form['first_line'] = array(
+				  '#title' => t('Time'),
+				  '#tree' => TRUE,
+				  '#name' => t('Time'),
+				  '#prefix' => '<div class="container-inline filterForm">',
+				  '#suffix' => '</div>',
+				  );
+				 
+	
+	$form['first_line']['searches']= array(
+					 '#type' => 'textfield',
+					 '#title' => t('Provide Company ID'),
+					 '#size' => 10,
+					 '#default_value' => $_REQUEST['companyId'],
+					 '#prefix' => '<span class="firstspan" width="40px">',
+					 '#suffix' => '</span>',
+					 );
+
+	$form['first_line']['submit']= array(
+					   '#type' => 'submit',
+					   '#value' => t('Submit'),
+					   '#prefix' => '<span class="midspan">',
+					   '#suffix' => '</span>',
+					   );
+	return $form;
+}
+function search_buyers_guide_2017_submit($fid, $fval) {
+	drupal_goto("buyers-guide-2017", 'companyId='.$fval['values']['first_line']['searches']);
+}
+function buyers_guide_theme() {
+	$theme = array(
+		 'buyers_guide' => array(
+					   'arguments' => array('form' => NULL,'result' => NULL,'buyersform' =>NULL),
+					   'template' => 'buyers_guide',
+					   )
+		 );
+	return $theme;
+}
+
+function buyers_guide_form_alter(&$form, $form_state, $form_id) {
+	
+	if($form_id=='webform_client_form_12498'){
+		$param = $_REQUEST['companyId'];
+		$sql = db_query('select companyId, companyName from company_details_0 where companyId ='.$param);
+		
+		if($param!=''){
+			$result = db_fetch_array($sql);
+			$form['submitted']['company_details']['company_id_number']['#value']=$param;
+			$form['submitted']['company_details']['company__name']['#value']=$result['companyName'];
+		}
+		
+		
+		
+	}
+	
+	
+}
+
+function buyers_guide_2017_view(){
+	$param = trim($_REQUEST['companyId']);
+	$form=drupal_get_form("search_buyers_guide_2017");
+	
+	if($param!=''){
+	    $sql = db_query('select companyId, companyName from company_details_0 where companyId ='.$param);
+		if($result = db_fetch_array($sql)){
+			drupal_goto("buyersguide2017", 'companyId='.$result['companyId']);
+		}
+		else{
+			$output = theme('buyers_guide', $form, false);
+		}
+	}
+	else
+	{
+	$output=theme('buyers_guide',$form);
+	}
+	return $output;
+	
+}
+function buyers_guide_init(){
+	drupal_add_js( drupal_get_path('module', 'buyers_guide').'/buyers_guide.js','module','header',FALSE,FALSE);
+}
+
+
+*/
+
+
+
+///*
+
+
+function buyers_guide_menu() {
+  $items['buyers-guide-2017'] = array(
+				   'title' => 'Buyer\'s Guide 2017',
+				   'description' => 'Company ID',
+				   'page callback' => 'buyers_guide_2017_view',
+				   'access callback' => true,
+				   'access arguments' => true,
+				   'type' => MENU_NORMAL_ITEM,
+				   'weight' => 10
+				   );
+  return $items;
+}
+
+
+
+function search_buyers_guide_2017() {
+	$form=array();
+	
+	$form['first_line'] = array(
+				  '#title' => t('Time'),
+				  '#tree' => TRUE,
+				  '#name' => t('Time'),
+				  '#prefix' => '<div class="container-inline filterForm">',
+				  '#suffix' => '</div>',
+				  );
+				 
+	$form['first_line']['label'] = array(
+					'#type' => 'markup',
+					'#value' => '<p style="margin-left: 15px;font-size: 15px;line-height: 25px;">Thank you for participating in the 2017 Buyer’s Guide! The deadline has passed and no new submissions are being accepted. If you have any questions, please contact Sylvia Gimenez at <a href= "mailto:sgimenez@nahro.org" target="_blank">sgimenez@nahro.org</a>.</p>',
+				);
+	
+	return $form;
+}
+
+
+
+
+
+function buyers_guide_2017_view(){
+	$form=drupal_get_form("search_buyers_guide_2017");
+	
+	
+	return $form;
+	
+}
+function buyers_guide_init(){
+	drupal_add_js( drupal_get_path('module', 'buyers_guide').'/buyers_guide.js','module','header',FALSE,FALSE);
+}
+//*/
+?>

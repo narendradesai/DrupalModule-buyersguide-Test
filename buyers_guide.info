@@ -1,0 +1,3 @@
+name = "Buyers Guide"
+description = "Shows details of company and and allows user to register for buyer's guide"
+core = "6.x"
